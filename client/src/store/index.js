@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-import { checkToken } from "@/utils";
 
 import axios from "axios";
 
@@ -7,34 +6,25 @@ const API_URL = "http://127.0.0.1:5000";
 
 export default createStore({
   state: {
-    user: {},
-    token: "",
+    documents: [],
   },
   mutations: {
-    setUser(state, payload) {
-      state.user = payload.user;
-    },
-    setJwtToken(state, payload) {
-      localStorage.token = payload.token;
-      state.token = payload.token;
+    setDocuments (state, payload) {
+      state.documents = payload.documents
     },
   },
   actions: {
-    login(context, user) {
-      context.commit("setUser", { user });
-      return axios
-        .post(`${API_URL}/login/`, user)
-        .then((response) =>
-          context.commit("setToken", { token: response.data })
-        )
-        .catch((error) => {
-          console.log(error);
-        });
+    loadDocuments (context) {
+      return axios.get(`${API_URL}/documents/`)
+        .then((response) => {
+          context.commit('setDocuments', { documents: response.data })
+        })
     },
+    uploadDocuments (document) {
+      return axios.post(`${API_URL}/documents/`, document)
+    }
   },
   getters: {
-    isAuthenticated(state) {
-      return checkToken(state.token);
-    },
+
   },
 });

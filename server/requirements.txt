@@ -3,6 +3,8 @@ appdirs==1.4.4
 asgiref==3.3.1
 astroid==2.5.2
 attrs==23.2.0
+azure-core==1.30.2
+azure-storage-blob==12.20.0
 beautifulsoup4==4.12.3
 blinker==1.8.2
 cachelib==0.13.0
@@ -30,6 +32,7 @@ identity==0.8.1
 idna==2.5
 importlib_metadata==7.1.0
 importlib_resources==6.4.0
+isodate==0.6.1
 isort==5.8.0
 itsdangerous==2.2.0
 Jinja2==3.1.4
