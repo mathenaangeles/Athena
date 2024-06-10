@@ -7,6 +7,11 @@ from azure.search.documents import SearchClient
 from azure.core.credentials import AzureKeyCredential
 
 import os
+from langchain import hub
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -20,6 +25,7 @@ indexer_url = os.getenv('AZURE_INDEXER_ENDPOINT')
 container_name = os.getenv('AZURE_CONTAINER_NAME')
 index_name = os.getenv('AZURE_INDEX_NAME')
 credential = AzureKeyCredential(os.getenv('AZURE_AI_SEARCH_ADMIN_KEY'))
+openai_api_key = os.getenv('OPENAI_API_KEY')
 
 blob_service_client = BlobServiceClient.from_connection_string(conn_str=connect_str)
 try:
@@ -72,7 +78,6 @@ def search(full_text):
         query_type='semantic',
         query_answer='extractive',
         query_caption='extractive',
-        query_answer_threshold=0.1,
         semantic_configuration_name=os.getenv('AZURE_SEMANTIC_CONFIGURATION'),
         top=3) 
     res = []
@@ -105,5 +110,32 @@ def search(full_text):
             'answer': answers,
         })
     return res
+
+@app.route("/chat/<query>", methods=["POST"])
+def chat(query):
+    search_client = SearchClient(endpoint=os.getenv('AZURE_AI_SEARCH_ENDPOINT'), index_name=index_name, credential=credential, api_version="2024-05-01-preview")
+    results = search_client.search(
+        search_text=query,
+        select='embeddings',
+    ) 
+    model = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, openai_api_key=openai_api_key)
+    template = """Answer the user's questions using the context below. Do not make up answers when you do not know the answer.
+    Instead, say that you cannot answer the question. Make sure your answers are accurate, clear, precise, concise, and coherent.
+    All your answers should be grounded in the context.
+
+    {context}
+
+    Question: {question}
+
+    Answer:"""
+    prompt_template = PromptTemplate.from_template(template)
+    rag_chain = (
+        {"context": results, "question": RunnablePassthrough()}
+        | prompt_template
+        | model
+        | StrOutputParser()
+    )
+    return rag_chain.invoke(query) 
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -10,6 +10,7 @@ export default createStore({
     user: {},
     accessToken: "",
     results: [],
+    response: "",
   },
   mutations: {
     setDocuments(state, payload) {
@@ -17,6 +18,9 @@ export default createStore({
     },
     setResults(state, payload) {
       state.results = payload.results;
+    },
+    setResponse(state, payload) {
+      state.response = payload.response;
     },
   },
   actions: {
@@ -47,8 +51,14 @@ export default createStore({
         context.commit("setResults", { results: response.data });
       });
     },
+    getResponse(context, query) {
+      return axios.post(`${API_URL}/chat/${query}`).then((response) => {
+        context.commit("setResponse", { response: response.data });
+      });
+    },
   },
   getters: {
     results: (state) => state.results,
+    response: (state) => state.response,
   },
 });

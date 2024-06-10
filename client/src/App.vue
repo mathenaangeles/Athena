@@ -25,6 +25,7 @@ export default {
 }
 #page {
   padding: 20px 20px;
+  height: 100vh;
 }
 .el-icon {
   padding-right: 5px;
