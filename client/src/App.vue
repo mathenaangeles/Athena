@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view />
+    <div id="page">
+      <router-view :key="$route.fullPath" />
+    </div>
   </div>
 </template>
 
@@ -20,6 +22,18 @@ export default {
   font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+}
+#page {
+  padding: 20px 20px;
+}
+.el-icon {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+a {
+  color: #409eff !important;
+}
+b {
+  color: #67C23A !important;
 }
 </style>

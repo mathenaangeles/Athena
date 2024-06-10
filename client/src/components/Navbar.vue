@@ -10,7 +10,13 @@
       </div>
       <div class="flex-grow"></div>
       <el-menu-item class="menu-item" index="1"
+        ><router-link to="/chat">Chat</router-link></el-menu-item
+      >
+      <el-menu-item class="menu-item" index="2"
         ><router-link to="/">Search</router-link></el-menu-item
+      >
+      <el-menu-item class="menu-item" index="3"
+        ><router-link to="/documents">Documents</router-link></el-menu-item
       >
       <el-button @click="login" class="menu-item" type="primary" round
         >Login</el-button
@@ -23,9 +29,8 @@
 export default {
   name: "Navbar",
   methods: {
-    login () {
-      this.$store.dispatch('login', { })
-        .then(() => this.$router.push('/'))
+    login() {
+      this.$store.dispatch("login", {}).then(() => this.$router.push("/"));
     },
   },
 };
