@@ -1,10 +1,13 @@
 # Athena
 
+Athena is a highly-customizable **Retrieval Augmented Generation** system that enables users to manage, search, and interact with their data. It was built using **Azure** cloud services.
+
 ## Getting Started
 
 ### Server - Flask
-1. Navigate to the `server` directory.
-2. Create a `.env` file and set the following variables.
+1. Start a virtual environment then run `pip install -r requirements.txt`. 
+2. Navigate to the `server` directory.
+3. Create a `.env` file and set the following variables.
 ```
 FLASK_APP=main.py
 FLASK_DEBUG=1
@@ -18,7 +21,6 @@ AZURE_INDEX_NAME=""
 AZURE_SEMANTIC_CONFIGURATION=""
 OPENAI_API_KEY=""
 ```
-3. Start a virtual environment then run `pip install -r requirements.txt`. 
 4. Run `flask run` to start the server.
 
 ### Client - VueJS
