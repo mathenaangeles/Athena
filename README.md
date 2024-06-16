@@ -1,4 +1,4 @@
-<img src="https://github.com/mathenaangeles/Athena/blob/main/client/src/assets/text-logo.png" width="100%" height="100%">
+<img src="https://github.com/mathenaangeles/Athena/blob/main/client/src/assets/Athena-logo.png" width="100%" height="100%">
 
 # Athena
 
