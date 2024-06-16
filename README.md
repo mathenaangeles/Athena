@@ -1,3 +1,5 @@
+<img src="https://github.com/mathenaangeles/Athena/blob/main/client/src/assets/text-logo.png" width="100%" height="100%">
+
 # Athena
 
 Athena is a highly-customizable **Retrieval Augmented Generation** system that enables users to manage, search, and interact with their data. It was built using **Azure** cloud services.
